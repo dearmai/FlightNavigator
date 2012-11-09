@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class ViewController;
+
+typedef enum {
+    Depature = 0, Arrival = 1
+} AirportType;
+
 @interface AirportListViewController : UITableViewController
+
+@property ViewController* parentViewController;
+@property AirportType airportType;
 
 @end

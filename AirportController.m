@@ -50,5 +50,15 @@ static AirportController *instance = nil;
 - (NSUInteger)countAirports {
     return [airports count];
 }
+- (NSInteger)findKeyWithICAO:(NSString *)newICAO {
+    NSInteger i = 0;
+    for(Airport *airport in airports){
+        if([airport.icao isEqualToString:newICAO] == YES) {
+            return i;
+        }
+        i++;
+    }
+    return -1;
+}
 
 @end

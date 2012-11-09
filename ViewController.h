@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class Airport;
+
 @interface ViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *btnDeparture;
-@property (weak, nonatomic) IBOutlet MKMapView *map;
+@property Airport *departureAirport, *arrivalAirport;
 
+@property (weak, nonatomic) IBOutlet UILabel *labelAirport;
+
+- (void)actionReloadAirportData;
 
 - (IBAction)actionSelectAirport:(UIBarButtonItem *)sender;
 

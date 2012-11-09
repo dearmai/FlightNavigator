@@ -7,7 +7,7 @@
         <!--Airport List View Controller-->
         <scene sceneID="nbG-My-aj5">
             <objects>
-                <tableViewController id="L2K-8v-Dsp" customClass="AirportListViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SCENE_AIRPORT" id="L2K-8v-Dsp" customClass="AirportListViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="bD9-DW-WRL">
                         <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -17,7 +17,11 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <items>
                                 <navigationItem title="공항 선택" id="kgH-w0-I80">
-                                    <barButtonItem key="leftBarButtonItem" title="닫기" id="IId-3t-dAo"/>
+                                    <barButtonItem key="leftBarButtonItem" title="닫기" id="IId-3t-dAo">
+                                        <connections>
+                                            <action selector="actionClose:" destination="L2K-8v-Dsp" id="bfw-y8-DYV"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </navigationItem>
                             </items>
                         </navigationBar>
@@ -39,7 +43,7 @@
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="RKSI" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cK4-2y-Wm7">
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="49" id="kHT-cL-iIL"/>
+                                                <constraint firstAttribute="width" constant="74" id="LXt-Do-mtN"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.19885646156273826" green="0.33314029072177154" blue="0.52897843070652173" alpha="1" colorSpace="calibratedRGB"/>
@@ -73,7 +77,7 @@
         <!--View Controller-->
         <scene sceneID="4">
             <objects>
-                <viewController id="2" customClass="ViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SCENE_MAIN" id="2" customClass="ViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -85,18 +89,26 @@
                                             <action selector="actionSelectAirport:" destination="2" id="wlz-2R-BWu"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="도착 공항 선택" id="hqo-LZ-EvQ"/>
+                                    <barButtonItem tag="1" title="도착 공항 선택" id="hqo-LZ-EvQ">
+                                        <connections>
+                                            <action selector="actionSelectAirport:" destination="2" id="Qep-zf-fgv"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="4tZ-13-3nB"/>
-                                    <barButtonItem title="경로 탐색" id="gUA-DK-HHZ"/>
+                                    <barButtonItem title="경로 탐색" id="gUA-DK-HHZ">
+                                        <connections>
+                                            <action selector="actionCalcPath:" destination="2" id="uS1-qs-Ev4"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gB4-gY-Oqu"/>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.50000000000000011" contentMode="left" text="출발 공항 : 없음, 도착 공항 : 없음" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM0-3w-M4P">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.50000000000000011" contentMode="left" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM0-3w-M4P">
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="cJr-xK-twU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="20"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -117,6 +129,7 @@
                     </view>
                     <connections>
                         <outlet property="btnDeparture" destination="Ggc-ON-jRe" id="pdx-8C-5q7"/>
+                        <outlet property="labelAirport" destination="RM0-3w-M4P" id="K5u-oY-2S9"/>
                         <outlet property="map" destination="gB4-gY-Oqu" id="Myz-Qb-ZuG"/>
                         <segue destination="L2K-8v-Dsp" kind="modal" identifier="AIRPORT" modalPresentationStyle="formSheet" id="p54-nh-GEN"/>
                     </connections>
@@ -126,29 +139,6 @@
             <point key="canvasLocation" x="-2688" y="-1044"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="AirportCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AirportCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="icao" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="AirportListViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AirportListViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionSelectAirport:" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="btnDeparture" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="map" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

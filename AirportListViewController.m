@@ -9,6 +9,7 @@
 #import "AirportListViewController.h"
 
 #import "AirportCell.h"
+#import "ViewController.h"
 
 #import "AirportController.h"
 
@@ -17,6 +18,8 @@
 @interface AirportListViewController () {
     AirportController *airportController;
 }
+
+
 
 @end
 
@@ -29,6 +32,10 @@
         
     }
     return self;
+}
+
+- (IBAction)actionClose:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidLoad
@@ -112,13 +119,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    Airport *airport = [airportController airportAtIndex:indexPath.row];
+    
+    ViewController *vc;
+    vc = (ViewController *)self.presentingViewController;
+    if(vc == nil) {
+        vc = (ViewController *)self.presentedViewController;
+    }
+    if(vc == nil) {
+        vc = [self.storyboard instantiateViewControllerWithIdentifier:@"SCENE_MAIN"];
+    }
+    
+    NSLog(@"%@", vc.labelAirport);
+    
+    if(self.airportType == Depature) vc.departureAirport = airport;
+    else vc.arrivalAirport = airport;
+    
+    [vc actionReloadAirportData];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

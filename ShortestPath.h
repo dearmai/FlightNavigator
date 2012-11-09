@@ -12,6 +12,9 @@
 
 @interface ShortestPath : NSObject
 
-- (id)initWithPoints:(NSArray *)aPoints andRoutes:(NSArray *)aRoutes andAirports:(NSArray *)aAirports;
-- (void)main:(Airport *)newDepartureAirport andArrivalAirport:(Airport *)newArrivalAirport;
+- (id)initWithPoints:(NSArray *)aPoints
+           andRoutes:(NSArray *)aRoutes
+         andAirports:(NSArray *)aAirports;
+- (void)main:(Airport *)newDepartureAirport
+andArrivalAirport:(Airport *)newArrivalAirport;
 @end

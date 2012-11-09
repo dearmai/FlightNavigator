@@ -16,5 +16,6 @@
 
 - (Airport *)airportAtIndex:(NSUInteger)index;
 - (NSUInteger)countAirports;
+- (NSInteger)findKeyWithICAO:(NSString *)newICAO;
 
 @end
