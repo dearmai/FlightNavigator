@@ -1,25 +1,25 @@
 //
-//  AirportController.m
+//  RouteController.m
 //  FlightNavigator
 //
 //  Created by Yoo Rinjae on 12. 11. 10..
 //  Copyright (c) 2012년 DearMai. All rights reserved.
 //
 
-#import "AirportController.h"
+#import "RouteController.h"
 
 #import "DataBuilder.h"
 
-#import "Airport.h"
+#import "FlightRoute.h"
 
-static AirportController *instance = nil;
+static RouteController *instance = nil;
 
-@implementation AirportController {
+@implementation RouteController {
 }
 
-@synthesize airports;
+@synthesize routes;
 
-+ (AirportController *)getInstance {
++ (RouteController *)getInstance {
     @synchronized(self){
         if(instance == nil) {
             // 리소스 경로 가져오기
@@ -30,7 +30,7 @@ static AirportController *instance = nil;
             NSLog(@"%d", match.location);
             NSLog(@"%@", bundlePath);
             
-            instance = [[AirportController alloc] initWithBundlePath:bundlePath];
+            instance = [[RouteController alloc] initWithBundlePath:bundlePath];
         }
     }
     return instance;
@@ -39,22 +39,22 @@ static AirportController *instance = nil;
 - (id)initWithBundlePath:(NSString *)newBundlePath {
     if ([self init]) {
         DataBuilder *builder = [[DataBuilder alloc] initWithDataPath:newBundlePath];
-        airports = [builder buildAirport];
+        routes = [builder buildFlightRoute];
     }
     return self;
 }
 
 #pragma -
-- (Airport *)airportAtIndex:(NSUInteger)index {
-    return [airports objectAtIndex:index];
+- (FlightRoute *)routeAtIndex:(NSUInteger)index {
+    return [routes objectAtIndex:index];
 }
-- (NSUInteger)countAirports {
-    return [airports count];
+- (NSUInteger)countRoutes {
+    return [routes count];
 }
-- (NSInteger)findKeyWithICAO:(NSString *)newICAO {
+- (NSInteger)findKeyWithName:(NSString *)name {
     NSInteger i = 0;
-    for(Airport *airport in airports){
-        if([airport.icao isEqualToString:newICAO] == YES) {
+    for(FlightRoute *route in routes){
+        if([route.name isEqualToString:name] == YES) {
             return i;
         }
         i++;

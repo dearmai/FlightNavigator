@@ -60,7 +60,7 @@
     return -1;
 }
 
-- (void)calcShortestPathWithDeparturePoint:(SignificantPoint *)newDeparturePoint
+- (NSArray *)calcShortestPathWithDeparturePoint:(SignificantPoint *)newDeparturePoint
                            andArrivalPoint:(SignificantPoint *)newArrivalPoint {
     NSUInteger countPoint = [points count];
     double matrix[countPoint][countPoint];
@@ -111,23 +111,23 @@
             
             // 뒤로도 가능하기 때문에 왕복
             //j = (int)[route.pointNameArray count];
-            for(int k = (int)[route.pointNameArray count] - 1; k >= 0; k--) {
-                NSString *pointName = [route.pointNameArray objectAtIndex:k];
-                int pointIndex = [self significantPointIndexWithName:pointName];
-                
-                if(pointIndex == i && k != 0) {
-                    NSString *strNextPoint = [route.pointNameArray objectAtIndex:k - 1];
-                    int nextPointIndex = [self significantPointIndexWithName:strNextPoint];
-                    SignificantPoint *nextPoint = [points objectAtIndex:nextPointIndex];
-                    Haversine *haversign = [[Haversine alloc] initWithLat1:thisPoint.latitude
-                                                                      lon1:thisPoint.longitude
-                                                                      lat2:nextPoint.latitude
-                                                                      lon2:nextPoint.longitude];
-                    double weight = [haversign toKilometers];
-                    
-                    matrix[i][nextPointIndex] = weight;
-                }
-            }
+//            for(int k = (int)[route.pointNameArray count] - 1; k >= 0; k--) {
+//                NSString *pointName = [route.pointNameArray objectAtIndex:k];
+//                int pointIndex = [self significantPointIndexWithName:pointName];
+//                
+//                if(pointIndex == i && k != 0) {
+//                    NSString *strNextPoint = [route.pointNameArray objectAtIndex:k - 1];
+//                    int nextPointIndex = [self significantPointIndexWithName:strNextPoint];
+//                    SignificantPoint *nextPoint = [points objectAtIndex:nextPointIndex];
+//                    Haversine *haversign = [[Haversine alloc] initWithLat1:thisPoint.latitude
+//                                                                      lon1:thisPoint.longitude
+//                                                                      lat2:nextPoint.latitude
+//                                                                      lon2:nextPoint.longitude];
+//                    double weight = [haversign toKilometers];
+//                    
+//                    matrix[i][nextPointIndex] = weight;
+//                }
+//            }
         }
         
         if(debug) printf("\n");
@@ -194,6 +194,8 @@
     
     NSLog(@"거리 : %fKm\n", distance[arrivalIndex]);
     
+    // 결과(전체 포인트에 대한 경로)
+    
     for (int i = 0; i < countPoint; i++){
         int cv = i;
         SignificantPoint *point = [points objectAtIndex:cv];
@@ -207,16 +209,27 @@
         
         printf("\n");
     }
+    
+    // 최종 결과 산출
+    NSMutableArray *shortestPath = [[NSMutableArray alloc] init];
+    int cv = arrivalIndex;
+    while(path[cv] >= 0) {
+        SignificantPoint *point = [points objectAtIndex:path[cv]];
+        [shortestPath addObject: point];
+        cv = path[cv];
+    }
+    
+    return shortestPath;
 }
 
-- (void)main:(Airport *)newDepartureAirport andArrivalAirport:(Airport *)newArrivalAirport {
+- (NSArray *)main:(Airport *)newDepartureAirport andArrivalAirport:(Airport *)newArrivalAirport {
     SignificantPoint *depaturePoint = [self getNearestPointWithAirport:newDepartureAirport];
     SignificantPoint *arrivalPoint = [self getNearestPointWithAirport:newArrivalAirport];
     
     NSLog(@"%@, %f, %f", depaturePoint.name, depaturePoint.latitude, depaturePoint.longitude);
     NSLog(@"%@, %f, %f", arrivalPoint.name, arrivalPoint.latitude, arrivalPoint.longitude);
     
-    [self calcShortestPathWithDeparturePoint:depaturePoint andArrivalPoint:arrivalPoint];
+    return [self calcShortestPathWithDeparturePoint:depaturePoint andArrivalPoint:arrivalPoint];
 }
 
 @end

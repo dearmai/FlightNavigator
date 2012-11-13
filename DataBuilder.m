@@ -227,6 +227,35 @@
     
     fclose(file);
     
+    // 역방향으로 경로 한번더 생성
+    for(FlightRoute *route in [array copy]) {
+        FlightRoute *newRoute = [[FlightRoute alloc] init];
+        NSMutableArray *routeNameArray = [[NSMutableArray alloc] init];
+        
+        newRoute.name = [route.name copy];
+        
+        for(int i = [route.pointNameArray count] - 1; i >= 0 ; i--){
+            NSString *name = [route.pointNameArray objectAtIndex:i];
+            [routeNameArray addObject:name];
+        }
+        
+        newRoute.pointNameArray = [routeNameArray copy];
+        [array addObject:newRoute];
+    }
+    
+    if(DEBUG){
+        printf("\n\n");
+        for(FlightRoute *route in array) {
+            printf("%10s : ", [route.name UTF8String]);
+            
+            for(NSString *name in route.pointNameArray){
+                printf("%s ", [name UTF8String]);
+            }
+            printf("\n");
+        }
+        printf("\n\n");
+    }
+    
     return array;
 }
 

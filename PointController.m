@@ -8,12 +8,14 @@
 
 #import "PointController.h"
 #import "DataBuilder.h"
+#import "SignificantPoint.h"
 
 static PointController *instance = nil;
 
 @implementation PointController {
-    NSArray *points;
 }
+
+@synthesize points;
 
 + (PointController *)getInstance {
     @synchronized(self){
@@ -44,8 +46,30 @@ static PointController *instance = nil;
 - (SignificantPoint *)pointObjectAtIndex:(NSUInteger)index {
     return [points objectAtIndex:index];
 }
+
 - (NSUInteger)countPoints {
     return [points count];
+}
+
+- (SignificantPoint *)pointObjectAtName:(NSString *)newName {
+    for (int i = 0; i < [points count]; i++){
+        SignificantPoint *point = [points objectAtIndex:i];
+        if([point.name isEqualToString:newName] == YES) {
+            return point;
+        }
+    }
+    return nil;
+}
+
+
+- (int)pointIndexWithName:(NSString *)newName {
+    for (int i = 0; i < [points count]; i++){
+        SignificantPoint *point = [points objectAtIndex:i];
+        if([point.name isEqualToString:newName] == YES) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 @end

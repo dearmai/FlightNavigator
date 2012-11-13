@@ -12,9 +12,13 @@
 
 @interface PointController : NSObject
 
+@property NSArray *points;
+
 + (PointController *)getInstance;
 
 - (SignificantPoint *)pointObjectAtIndex:(NSUInteger)index;
+- (SignificantPoint *)pointObjectAtName:(NSString *)newName;
 - (NSUInteger)countPoints;
+- (int)pointIndexWithName:(NSString *)newName;
 
 @end

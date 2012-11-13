@@ -12,6 +12,8 @@
 
 @interface AirportController : NSObject
 
+@property NSArray *airports;
+
 + (AirportController *)getInstance;
 
 - (Airport *)airportAtIndex:(NSUInteger)index;

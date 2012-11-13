@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class Airport;
+@class Airport, SignificantPoint;
 
 @interface ShortestPath : NSObject
 
 - (id)initWithPoints:(NSArray *)aPoints
            andRoutes:(NSArray *)aRoutes
          andAirports:(NSArray *)aAirports;
-- (void)main:(Airport *)newDepartureAirport
-andArrivalAirport:(Airport *)newArrivalAirport;
+- (SignificantPoint *)getNearestPointWithAirport:(Airport *)newAirport;
+- (NSArray *)main:(Airport *)newDepartureAirport andArrivalAirport:(Airport *)newArrivalAirport;
 @end

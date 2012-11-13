@@ -10,7 +10,7 @@
 
 @class Airport;
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <MKMapViewDelegate>
 
 @property Airport *departureAirport, *arrivalAirport;
 
