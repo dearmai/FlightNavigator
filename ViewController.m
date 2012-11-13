@@ -104,6 +104,7 @@
     }
     
     if(isPath == YES){
+        dispatch_sync(dispatch_get_main_queue(), ^(void){
         // 전체 경로 표시
         NSArray *routes = [routeController routes];
         for(FlightRoute *route in routes){
@@ -156,6 +157,8 @@
         MKPolyline *polyLine = [MKPolyline polylineWithCoordinates:coords count:routeCount];
         polyLine.title = @"asd";
         [self.map addOverlay:polyLine];
+            
+        });
     }
 }
 
@@ -194,7 +197,23 @@
         return;
     }
     
-    [self reloadDisplayWithPath:YES];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:@"경로 탐색 중..."
+                                                   delegate:self
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:nil];
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [activityIndicatorView startAnimating];
+    activityIndicatorView.frame = CGRectMake(125, 55, 30, 30);
+    [alert addSubview:activityIndicatorView];
+    [alert show];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
+        [self reloadDisplayWithPath:YES];
+        dispatch_sync(dispatch_get_main_queue(), ^(void){
+            [alert dismissWithClickedButtonIndex:0 animated:YES];
+        });
+    });
 }
 
 #pragma Delegate

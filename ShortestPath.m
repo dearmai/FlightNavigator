@@ -196,19 +196,19 @@
     
     // 결과(전체 포인트에 대한 경로)
     
-    for (int i = 0; i < countPoint; i++){
-        int cv = i;
-        SignificantPoint *point = [points objectAtIndex:cv];
-        printf("To %s : %s", [point.name UTF8String], [point.name UTF8String]);
-        
-        while(path[cv] >= 0){
-            SignificantPoint *point1 = [points objectAtIndex:path[cv]];
-            printf("<-[%s]", [point1.name UTF8String]);
-            cv = path[cv];
-        }
-        
-        printf("\n");
-    }
+//    for (int i = 0; i < countPoint; i++){
+//        int cv = i;
+//        SignificantPoint *point = [points objectAtIndex:cv];
+//        printf("To %s : %s", [point.name UTF8String], [point.name UTF8String]);
+//        
+//        while(path[cv] >= 0){
+//            SignificantPoint *point1 = [points objectAtIndex:path[cv]];
+//            printf("<-[%s]", [point1.name UTF8String]);
+//            cv = path[cv];
+//        }
+//        
+//        printf("\n");
+//    }
     
     // 최종 결과 산출
     NSMutableArray *shortestPath = [[NSMutableArray alloc] init];
